@@ -7,13 +7,13 @@
     <Application.Resources>
         <ResourceDictionary>
             <DataTemplate x:Key="TaskItem">
-                <Border>
+                <Border BorderThickness="1" BorderBrush="Gray" Padding="3">
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="100"/>
                         </Grid.ColumnDefinitions>
-                        <TextBox IsReadOnly="True" Grid.Column="0" Text="{Binding Path=Task}" FontSize="18" Padding="10"/>
+                        <TextBox IsReadOnly="True" Grid.Column="0" Text="{Binding Path=Task}" FontSize="18" Padding="10" Style="{DynamicResource ListItemTextBox}" Template="{DynamicResource TaskItemTemplate}"/>
                         <StackPanel Orientation="Horizontal" Grid.Column="1" HorizontalAlignment="Center">
                             <Button Content="Comp" Width="35" Height="35" Margin="10,0" HorizontalAlignment="Center"/>
                             <Button Command="{Binding Path=DeleteClick}" CommandParameter="{Binding Path=Id}" Content="Del" Width="35" Height="35" HorizontalAlignment="Center"/>
@@ -21,12 +21,23 @@
                     </Grid>
                 </Border>
             </DataTemplate>
+            <ControlTemplate TargetType="TextBox" x:Key="TaskItemTemplate">
+                <ControlTemplate.Triggers>
+                    <Trigger Property="TextBox.IsMouseOver" Value="True">
+
+                    </Trigger>
+                </ControlTemplate.Triggers>
+            </ControlTemplate>
             <Style TargetType="ListBoxItem">
                 <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
             </Style>
             <Style TargetType="ListBox">
                 <Setter Property="BorderThickness" Value="0"/>
             </Style>
+            <Style x:Key="ListItemTextBox" TargetType="TextBox">
+                <Setter Property="BorderThickness" Value="0"/>
+            </Style>
+            
         </ResourceDictionary>
     </Application.Resources>
 </Application>

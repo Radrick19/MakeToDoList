@@ -7,20 +7,23 @@
         xmlns:local="clr-namespace:ToDoList"
         xmlns:vm="clr-namespace:ToDoList.ViewModel"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="450" Width="600">
  
     <Window.DataContext>
         <vm:MainViewModel/>
     </Window.DataContext>
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="100"/>
+            <RowDefinition Height="80"/>
             <RowDefinition Height="*"/>
-            <RowDefinition Height="90"/>
+            <RowDefinition Height="60"/>
         </Grid.RowDefinitions>
-        <ListBox Grid.Row="1" Width="auto" ItemsSource="{Binding ToDoCollection}" ItemTemplate="{StaticResource TaskItem}"/>
+        <ListBox Grid.Row="1" Width="auto" ItemsSource="{Binding ToDoCollection}" ItemTemplate="{StaticResource TaskItem}">
+            
+        </ListBox>
         <StackPanel Grid.Row="2" Orientation="Horizontal" Margin="10,0">
-            <TextBox Text="{Binding TaskText, Mode=TwoWay}" MinWidth="150" Height="50" FontSize="18" VerticalContentAlignment="Center" Padding="10"/>
+            <TextBox Text="{Binding TaskText, Mode=TwoWay}" MinWidth="150" Height="50" FontSize="18" VerticalContentAlignment="Center" Padding="10">
+            </TextBox>
             <Button Command="{Binding AddItem}" Height="35" Width="35" Content="Add" Margin="10,0"/>
         </StackPanel>
     </Grid>
