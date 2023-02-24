@@ -21,13 +21,6 @@
                     </Grid>
                 </Border>
             </DataTemplate>
-            <ControlTemplate TargetType="TextBox" x:Key="TaskItemTemplate">
-                <ControlTemplate.Triggers>
-                    <Trigger Property="TextBox.IsMouseOver" Value="True">
-
-                    </Trigger>
-                </ControlTemplate.Triggers>
-            </ControlTemplate>
             <Style TargetType="ListBoxItem">
                 <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
             </Style>

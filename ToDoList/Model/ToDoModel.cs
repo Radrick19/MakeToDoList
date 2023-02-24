@@ -29,10 +29,6 @@ namespace ToDoList.Model
         private bool isDone;
         private int id;
 
-        //public void DeleteClick(object obj)
-        //{
-        //    DeleteClickEvent(obj);
-        //}
 
         public ICommand DeleteClick
         {
