@@ -18,8 +18,8 @@
         </Grid.RowDefinitions>
         <ListBox Grid.Row="1" Width="auto" ItemsSource="{Binding ToDoCollection}" ItemTemplate="{StaticResource TaskItem}"/>
         <StackPanel Grid.Row="2" Orientation="Horizontal" Margin="10,0">
-            <TextBox Text="{Binding TaskText, Mode=OneWay}" MinWidth="150" Height="50" FontSize="18" VerticalContentAlignment="Center" Padding="10"/>
-            <Button Height="35" Width="35" Content="Add" Margin="10,0"/>
+            <TextBox Text="{Binding TaskText, Mode=TwoWay}" MinWidth="150" Height="50" FontSize="18" VerticalContentAlignment="Center" Padding="10"/>
+            <Button Command="{Binding AddItem}" Height="35" Width="35" Content="Add" Margin="10,0"/>
         </StackPanel>
     </Grid>
 </Window>
