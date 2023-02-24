@@ -9,7 +9,7 @@ namespace ToDoList.ViewModel
     internal class MainViewModel : BaseViewModel
     {
         public ObservableCollection<ToDoModel> ToDoCollection { get; set; }
-        public int itemsId = 0;
+        public int itemsCount = 0;
         private string taskText;
         public string TaskText
         {
@@ -24,9 +24,9 @@ namespace ToDoList.ViewModel
                 {
                     if (TaskText != null && TaskText != string.Empty)
                     {
-                        ToDoCollection.Add(new ToDoModel(TaskText, itemsId));
+                        ToDoCollection.Add(new ToDoModel(TaskText, itemsCount));
                         Set(ref taskText, string.Empty, nameof(TaskText));
-                        itemsId++;
+                        itemsCount++;
                     }
                 });
             }
@@ -48,6 +48,7 @@ namespace ToDoList.ViewModel
             }
             throw new System.ArgumentException("No argument index");
         }
+
         public MainViewModel()
         {
             ToDoCollection = new ObservableCollection<ToDoModel>();

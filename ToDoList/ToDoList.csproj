@@ -35,6 +35,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Meziantou.WpfFontAwesome, Version=5.15.4.0, Culture=neutral, PublicKeyToken=65e02acb2aedcdd6, processorArchitecture=MSIL">
+      <HintPath>..\packages\Meziantou.WpfFontAwesome.5.15.4\lib\net461\Meziantou.WpfFontAwesome.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
@@ -90,6 +93,7 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

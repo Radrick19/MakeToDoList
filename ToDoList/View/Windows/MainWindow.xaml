@@ -1,5 +1,5 @@
 ﻿<Window x:Name="root"
-    x:Class="ToDoList.View.Windows.MainWindow"
+        x:Class="ToDoList.View.Windows.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -18,13 +18,12 @@
             <RowDefinition Height="*"/>
             <RowDefinition Height="60"/>
         </Grid.RowDefinitions>
-        <ListBox Grid.Row="1" Width="auto" ItemsSource="{Binding ToDoCollection}" ItemTemplate="{StaticResource TaskItem}">
-            
-        </ListBox>
+        <Label Grid.Row="0" Content="ToDo List" FontSize="40" Margin="10,0"/>
+        <ListBox Margin="20,0,20,0" Grid.Row="1" Width="auto" ItemsSource="{Binding ToDoCollection}" ItemTemplate="{StaticResource TaskItem}"/>
         <StackPanel Grid.Row="2" Orientation="Horizontal" Margin="10,0">
-            <TextBox Text="{Binding TaskText, Mode=TwoWay}" MinWidth="150" Height="50" FontSize="18" VerticalContentAlignment="Center" Padding="10">
+            <TextBox Text="{Binding TaskText, Mode=TwoWay}" MinWidth="200" Height="40" FontSize="18" VerticalContentAlignment="Center" Padding="5">
             </TextBox>
-            <Button Command="{Binding AddItem}" Height="35" Width="35" Content="Add" Margin="10,0"/>
+            <Button Command="{Binding AddItem}" Height="35" Width="120" Content="Add ToDo Item" Margin="10,0" Background="#17a2b8" Foreground="White"/>
         </StackPanel>
     </Grid>
 </Window>
