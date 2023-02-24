@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.ObjectModel;
 using System.Windows.Input;
 using ToDoList.Infrastrucre.Commands.Base;
 using ToDoList.Model;
@@ -14,6 +9,7 @@ namespace ToDoList.ViewModel
     internal class MainViewModel : BaseViewModel
     {
         public ObservableCollection<ToDoModel> ToDoCollection { get; set; }
+        public int itemsId = 0;
         private string taskText;
         public string TaskText
         {
@@ -26,28 +22,36 @@ namespace ToDoList.ViewModel
             {
                 return new RelayCommand((obj) =>
                 {
-                    if(TaskText != null && TaskText != string.Empty)
+                    if (TaskText != null && TaskText != string.Empty)
                     {
-                        ToDoCollection.Add(new ToDoModel(TaskText));
+                        ToDoCollection.Add(new ToDoModel(TaskText, itemsId));
                         Set(ref taskText, string.Empty, nameof(TaskText));
+                        itemsId++;
                     }
                 });
             }
         }
-        public ICommand DeleteItem
+
+        private void DeleteItemMethod(object obj)
         {
-            get
+            int findId = (int)obj;
+            var deleteItem = SearchCollectionForId(findId);
+            ToDoCollection?.Remove(deleteItem);
+        }
+
+        private ToDoModel SearchCollectionForId(int id)
+        {
+            foreach(var item in ToDoCollection)
             {
-                return new RelayCommand((obj) =>
-                {
-                    ToDoModel model = obj as ToDoModel;
-                    ToDoCollection.Remove(model);
-                });
+                if (id == item.Id)
+                    return item;
             }
+            throw new System.ArgumentException("No argument index");
         }
         public MainViewModel()
         {
             ToDoCollection = new ObservableCollection<ToDoModel>();
+            ToDoModel.DeleteClickEvent += DeleteItemMethod;
         }
     }
 }

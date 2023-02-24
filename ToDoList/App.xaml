@@ -16,7 +16,7 @@
                         <TextBox IsReadOnly="True" Grid.Column="0" Text="{Binding Path=Task}" FontSize="18" Padding="10"/>
                         <StackPanel Orientation="Horizontal" Grid.Column="1" HorizontalAlignment="Center">
                             <Button Content="Comp" Width="35" Height="35" Margin="10,0" HorizontalAlignment="Center"/>
-                            <Button Content="Del" Width="35" Height="35" HorizontalAlignment="Center"/>
+                            <Button Command="{Binding Path=DeleteClick}" CommandParameter="{Binding Path=Id}" Content="Del" Width="35" Height="35" HorizontalAlignment="Center"/>
                         </StackPanel>
                     </Grid>
                 </Border>
