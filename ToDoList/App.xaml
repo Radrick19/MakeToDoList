@@ -4,6 +4,28 @@
              xmlns:local="clr-namespace:ToDoList"
              StartupUri="View/Windows/MainWindow.xaml">
     <Application.Resources>
-         
+        <ResourceDictionary>
+            <DataTemplate x:Key="TaskItem">
+                <Border>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="100"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBox IsReadOnly="True" Grid.Column="0" Text="{Binding Path=Task}" FontSize="18" Padding="10"/>
+                        <StackPanel Orientation="Horizontal" Grid.Column="1" HorizontalAlignment="Center">
+                            <Button Content="Comp" Width="35" Height="35" Margin="10,0" HorizontalAlignment="Center"/>
+                            <Button Content="Del" Width="35" Height="35" HorizontalAlignment="Center"/>
+                        </StackPanel>
+                    </Grid>
+                </Border>
+            </DataTemplate>
+            <Style TargetType="ListBoxItem">
+                <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+            </Style>
+            <Style TargetType="ListBox">
+                <Setter Property="BorderThickness" Value="0"/>
+            </Style>
+        </ResourceDictionary>
     </Application.Resources>
 </Application>
