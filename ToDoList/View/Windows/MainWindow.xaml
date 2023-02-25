@@ -8,22 +8,36 @@
         xmlns:vm="clr-namespace:ToDoList.ViewModel"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="600">
- 
+
     <Window.DataContext>
         <vm:MainViewModel/>
     </Window.DataContext>
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="80"/>
+            <RowDefinition Height="95"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="60"/>
         </Grid.RowDefinitions>
-        <Label Grid.Row="0" Content="ToDo List" FontSize="40" Margin="10,0"/>
-        <ListBox Margin="20,0,20,0" Grid.Row="1" Width="auto" ItemsSource="{Binding ToDoCollection}" ItemTemplate="{StaticResource TaskItem}"/>
+        <Grid Grid.Row="0" Margin="10,0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="3*"/>
+                <ColumnDefinition Width="2*"/>
+            </Grid.ColumnDefinitions>
+            <StackPanel Grid.Column="0" VerticalAlignment="Bottom">
+                <Label Content="ToDo List" FontSize="40"/>
+                <TextBox Width="200" FontSize="16" Height="30" HorizontalAlignment="Left" Margin="10,0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+            </StackPanel>
+            <StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Bottom" HorizontalAlignment="Center">
+                <Button x:Name="AllSort_BTN" Command="{Binding ChangeSortStatus}" Width="60" Height="30" Background="White" Content="All" FontSize="16" CommandParameter="{Binding Content, ElementName=AllSort_BTN}"/>
+                <Button x:Name="ActiveSort_BTN" Command="{Binding ChangeSortStatus}" Width="60" Height="30" Background="White" Content="Active" FontSize="16" CommandParameter="{Binding Content, ElementName=ActiveSort_BTN}"/>
+                <Button x:Name="DoneSort_BTN" Command="{Binding ChangeSortStatus}" Width="60" Height="30" Background="White" Content="Done" FontSize="16" CommandParameter="{Binding Content, ElementName=DoneSort_BTN}"/>
+            </StackPanel>
+        </Grid>
+        <ListBox Margin="20,20,20,20" Grid.Row="1" Width="auto" ItemsSource="{Binding ToDoCollection}" ItemTemplate="{StaticResource TaskItem}"/>
         <StackPanel Grid.Row="2" Orientation="Horizontal" Margin="10,0">
             <TextBox Text="{Binding TaskText, Mode=TwoWay}" MinWidth="200" Height="40" FontSize="18" VerticalContentAlignment="Center" Padding="5">
             </TextBox>
             <Button Command="{Binding AddItem}" Height="35" Width="120" Content="Add ToDo Item" Margin="10,0" Background="#17a2b8" Foreground="White"/>
         </StackPanel>
     </Grid>
-</Window>
+</Window> 

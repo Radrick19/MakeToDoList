@@ -5,22 +5,26 @@
              xmlns:vm="clr-namespace:ToDoList.ViewModel"
              xmlns:fa="clr-namespace:Meziantou.WpfFontAwesome;assembly=Meziantou.WpfFontAwesome"
              StartupUri="View/Windows/MainWindow.xaml">
+    <!--Как всю эту кашу можно раскидать по разным файлам?-->
     <Application.Resources>
         <ResourceDictionary>
             <DataTemplate x:Key="TaskItem">
-                <Border BorderThickness="1" BorderBrush="#dfdfdf" Padding="3" CornerRadius="5">
+                <Border BorderThickness="1" BorderBrush="#dfdfdf" Padding="3" CornerRadius="5"  MaxWidth="500">
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="100"/>
                         </Grid.ColumnDefinitions>
-                        <TextBox IsReadOnly="True" Grid.Column="0" Text="{Binding Path=Task}" FontSize="20" Padding="10" Style="{DynamicResource ListItemTextBox}" Template="{DynamicResource TaskItemTemplate}"/>
+                        <TextBox IsReadOnly="True" Grid.Column="0" Text="{Binding Path=Task}" FontSize="20" Padding="10" Style="{DynamicResource ListItemTextBox}" TextWrapping="WrapWithOverflow"/>
                         <StackPanel Orientation="Horizontal" Grid.Column="1" HorizontalAlignment="Center">
-                            <Button Width="35" Height="35" Margin="10,0" HorizontalAlignment="Center" Background="#ffc107">
+                            <!--Как сделать тригер на смену цвета кнопки в зависимости от свойства IsDone ТуДу модели-->
+                            <Button Command="{Binding Path=ChangeIsDoneStatus}" Width="35" Height="35" Margin="10,0" HorizontalAlignment="Center" Background="#ffc107">
                                 <Button.Content>
                                     <fa:FontAwesomeIcon SolidIcon="Check" FontSize="18" Foreground="black"/>
                                 </Button.Content>
                             </Button>
+                            <!--Не смог забиндить команду через темплейт (как получить ссылку на вьюмодель и передать туда объект)-->
+                            <!--Как округлить кнопку?-->
                             <Button Command="{Binding Path=DeleteClick}" CommandParameter="{Binding Path=Id}" Width="35" Height="35" HorizontalAlignment="Center" Background="#dc3545">
                                 <Button.Content>
                                     <fa:FontAwesomeIcon SolidIcon="Trash" FontSize="18" Foreground="White"/>
@@ -39,7 +43,6 @@
             <Style x:Key="ListItemTextBox" TargetType="TextBox">
                 <Setter Property="BorderThickness" Value="0"/>
             </Style>
-            
         </ResourceDictionary>
     </Application.Resources>
 </Application>

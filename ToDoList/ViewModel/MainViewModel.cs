@@ -1,16 +1,33 @@
-﻿using System.Collections.ObjectModel;
+﻿using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Windows.Input;
+using ToDoList.Infrastrucre;
 using ToDoList.Infrastrucre.Commands.Base;
 using ToDoList.Model;
 using ToDoList.ViewModel.Base;
 
 namespace ToDoList.ViewModel
 {
+    enum SortStatus
+    {
+        All,
+        Active,
+        Done
+    }
     internal class MainViewModel : BaseViewModel
     {
-        public ObservableCollection<ToDoModel> ToDoCollection { get; set; }
-        public int itemsCount = 0;
+        private List<ToDoModel> ToDoList { get; set; }
+        //хочется чтобы ObservableCollecion сама обновлялась через Set, но при этом в Get выдавала статический метод инфраструктуры
+        public ObservableCollection<ToDoModel> ToDoCollection
+        {
+            get
+            {
+                ObservableCollection<ToDoModel> collection = SortToDoList.SortToDo(ToDoList, sortStatus);
+                return collection;
+            }
+        }
         private string taskText;
+        private SortStatus sortStatus { get; set; }
         public string TaskText
         {
             get { return taskText; }
@@ -24,35 +41,45 @@ namespace ToDoList.ViewModel
                 {
                     if (TaskText != null && TaskText != string.Empty)
                     {
-                        ToDoCollection.Add(new ToDoModel(TaskText, itemsCount));
+                        ToDoList.Add(new ToDoModel(TaskText));
                         Set(ref taskText, string.Empty, nameof(TaskText));
-                        itemsCount++;
+                        OnPropertyChanged(nameof(ToDoCollection));
                     }
                 });
             }
         }
 
-        private void DeleteItemMethod(object obj)
+        public ICommand ChangeSortStatus
         {
-            int findId = (int)obj;
-            var deleteItem = SearchCollectionForId(findId);
-            ToDoCollection?.Remove(deleteItem);
+            get
+            {
+                return new RelayCommand((obj) =>
+                {
+                    string buttonName = obj as string;
+                    if (buttonName == "All")
+                        sortStatus = SortStatus.All;
+                    else if (buttonName == "Active")
+                        sortStatus = SortStatus.Active;
+                    else
+                        sortStatus = SortStatus.Done;
+                    OnPropertyChanged(nameof(ToDoCollection));
+                });
+            }
         }
 
-        private ToDoModel SearchCollectionForId(int id)
+        private void DeleteItem(object obj)
         {
-            foreach(var item in ToDoCollection)
-            {
-                if (id == item.Id)
-                    return item;
-            }
-            throw new System.ArgumentException("No argument index");
+            ToDoModel item =  obj as ToDoModel;
+            ToDoCollection?.Remove(item);
+            //OnPropertyChanged(nameof(ToDoCollection));
         }
+
 
         public MainViewModel()
         {
-            ToDoCollection = new ObservableCollection<ToDoModel>();
-            ToDoModel.DeleteClickEvent += DeleteItemMethod;
+            ToDoList = new List<ToDoModel>();
+            ToDoModel.DeleteClickEvent += DeleteItem;
+            sortStatus = SortStatus.All;
         }
     }
 }
