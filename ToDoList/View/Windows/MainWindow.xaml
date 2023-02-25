@@ -29,6 +29,7 @@
             </StackPanel>
             <StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Bottom" HorizontalAlignment="Center">
                 <Button x:Name="AllSort_BTN" Command="{Binding ChangeSortStatus}" Width="60" Height="30" Background="White" Content="All" FontSize="16" CommandParameter="{Binding Content, ElementName=AllSort_BTN}"/>
+                <!--Сделать графическое отображение выбранного статуса с помощью изменения цвета-->
                 <Button x:Name="ActiveSort_BTN" Command="{Binding ChangeSortStatus}" Width="60" Height="30" Background="White" Content="Active" FontSize="16" CommandParameter="{Binding Content, ElementName=ActiveSort_BTN}"/>
                 <Button x:Name="DoneSort_BTN" Command="{Binding ChangeSortStatus}" Width="60" Height="30" Background="White" Content="Done" FontSize="16" CommandParameter="{Binding Content, ElementName=DoneSort_BTN}"/>
             </StackPanel>

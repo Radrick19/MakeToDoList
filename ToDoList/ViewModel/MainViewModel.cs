@@ -16,7 +16,19 @@ namespace ToDoList.ViewModel
     }
     internal class MainViewModel : BaseViewModel
     {
-        private List<ToDoModel> ToDoList { get; set; }
+        private List<ToDoModel> toDoList;
+        private List<ToDoModel> ToDoList
+        {
+            get
+            {
+                return toDoList;
+            }
+            set
+            {
+                toDoList = value;
+                OnPropertyChanged(nameof(ToDoCollection));
+            }
+        }
         //хочется чтобы ObservableCollecion сама обновлялась через Set, но при этом в Get выдавала статический метод инфраструктуры
         public ObservableCollection<ToDoModel> ToDoCollection
         {
@@ -70,8 +82,8 @@ namespace ToDoList.ViewModel
         private void DeleteItem(object obj)
         {
             ToDoModel item =  obj as ToDoModel;
-            ToDoCollection?.Remove(item);
-            //OnPropertyChanged(nameof(ToDoCollection));
+            ToDoList?.Remove(item);
+            OnPropertyChanged(nameof(ToDoCollection));
         }
 
 
