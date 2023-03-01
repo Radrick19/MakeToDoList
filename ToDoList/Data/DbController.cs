@@ -104,6 +104,7 @@ namespace ToDoList.Data
         {
             try
             {
+                Directory.CreateDirectory("Data");
                 sqlConnection = new SQLiteConnection("Data Source=" + dbName + ";Version=3;FailIfMissing=False");
                 sqlConnection.Open();
                 sqlCommand.Connection = sqlConnection;
