@@ -1,6 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Windows;
 using System.Windows.Input;
+using ToDoList.Data;
 using ToDoList.Infrastrucre;
 using ToDoList.Infrastrucre.Commands.Base;
 using ToDoList.Model;
@@ -16,35 +18,34 @@ namespace ToDoList.ViewModel
     }
     internal class MainViewModel : BaseViewModel
     {
-        private List<ToDoModel> toDoList;
-        private List<ToDoModel> ToDoList
+        public List<ToDoModel> ToDoList
         {
             get
             {
-                return toDoList;
+                switch (sortStatus)
+                {
+                    case SortStatus.All: return DbController.GetAllData();
+                    case SortStatus.Active: return DbController.GetActiveData();
+                    case SortStatus.Done: return DbController.GetDoneData();
+                    default: return null;
+                }
             }
-            set
-            {
-                toDoList = value;
-                OnPropertyChanged(nameof(ToDoCollection));
-            }
+            set { toDoList = value; }
         }
-        //хочется чтобы ObservableCollecion сама обновлялась через Set, но при этом в Get выдавала статический метод инфраструктуры
-        public ObservableCollection<ToDoModel> ToDoCollection
-        {
-            get
-            {
-                ObservableCollection<ToDoModel> collection = SortToDoList.SortToDo(ToDoList, sortStatus);
-                return collection;
-            }
-        }
-        private string taskText;
-        private SortStatus sortStatus { get; set; }
         public string TaskText
         {
             get { return taskText; }
             set { taskText = value; }
         }
+        public SortStatus SortStatus
+        {
+            get { return sortStatus; }
+            set { Set(ref sortStatus, value, nameof(ToDoList)); }
+        }
+        private SortStatus sortStatus;
+        private string taskText;
+        private List<ToDoModel> toDoList;
+
         public ICommand AddItem
         {
             get
@@ -53,28 +54,43 @@ namespace ToDoList.ViewModel
                 {
                     if (TaskText != null && TaskText != string.Empty)
                     {
-                        ToDoList.Add(new ToDoModel(TaskText));
+                        DbController.AddData(TaskText);
                         Set(ref taskText, string.Empty, nameof(TaskText));
-                        OnPropertyChanged(nameof(ToDoCollection));
+                        OnPropertyChanged(nameof(ToDoList));
                     }
                 });
             }
         }
 
-        public ICommand ChangeSortStatus
+        public ICommand SetAllSort
         {
             get
             {
                 return new RelayCommand((obj) =>
                 {
-                    string buttonName = obj as string;
-                    if (buttonName == "All")
-                        sortStatus = SortStatus.All;
-                    else if (buttonName == "Active")
-                        sortStatus = SortStatus.Active;
-                    else
-                        sortStatus = SortStatus.Done;
-                    OnPropertyChanged(nameof(ToDoCollection));
+                    SortStatus = SortStatus.All;
+                });
+            }
+        }
+
+        public ICommand SetActiveSort
+        {
+            get
+            {
+                return new RelayCommand((obj) =>
+                {
+                    SortStatus = SortStatus.Active;
+                });
+            }
+        }
+
+        public ICommand SetDoneSort
+        {
+            get
+            {
+                return new RelayCommand((obj) =>
+                {
+                    SortStatus = SortStatus.Done;
                 });
             }
         }
@@ -82,14 +98,12 @@ namespace ToDoList.ViewModel
         private void DeleteItem(object obj)
         {
             ToDoModel item =  obj as ToDoModel;
-            ToDoList?.Remove(item);
-            OnPropertyChanged(nameof(ToDoCollection));
+            DbController.RemoveItem(item.Id);
+            OnPropertyChanged(nameof(ToDoList));
         }
-
 
         public MainViewModel()
         {
-            ToDoList = new List<ToDoModel>();
             ToDoModel.DeleteClickEvent += DeleteItem;
             sortStatus = SortStatus.All;
         }

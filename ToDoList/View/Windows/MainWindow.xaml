@@ -26,16 +26,16 @@
             <!--Засунуть все стили в отдельные файлы-->
             <StackPanel Grid.Column="0" VerticalAlignment="Bottom">
                 <Label Content="ToDo List" FontSize="40"/>
-                <TextBox Width="200" FontSize="16" Height="30" HorizontalAlignment="Left" Margin="10,0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+                <TextBox Text="Under development" Width="200" FontSize="16" Height="30" HorizontalAlignment="Left" Margin="10,0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
             </StackPanel>
             <StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Bottom" HorizontalAlignment="Center">
                 <!--Сделать графическое отображение выбранного статуса с помощью изменения цвета-->
-                <Button x:Name="AllSort_BTN" Command="{Binding ChangeSortStatus}" Width="60" Height="30" Background="White" Content="All" FontSize="16" CommandParameter="{Binding Content, ElementName=AllSort_BTN}"/>
-                <Button x:Name="ActiveSort_BTN" Command="{Binding ChangeSortStatus}" Width="60" Height="30" Background="White" Content="Active" FontSize="16" CommandParameter="{Binding Content, ElementName=ActiveSort_BTN}"/>
-                <Button x:Name="DoneSort_BTN" Command="{Binding ChangeSortStatus}" Width="60" Height="30" Background="White" Content="Done" FontSize="16" CommandParameter="{Binding Content, ElementName=DoneSort_BTN}"/>
+                <Button Template="{DynamicResource LeftSortButton}" x:Name="AllSort_BTN" Command="{Binding SetAllSort}" Background="White" Width="60" Height="30" Content="All" FontSize="16"/>
+                <Button Template="{DynamicResource MiddleSortButton}" x:Name="ActiveSort_BTN" Command="{Binding SetActiveSort}" Width="60" Height="30" Background="White" Content="Active" FontSize="16" CommandParameter="{Binding Content, ElementName=ActiveSort_BTN}"/>
+                <Button Template="{DynamicResource RightSortButton}" x:Name="DoneSort_BTN" Command="{Binding SetDoneSort}" Width="60" Height="30" Background="White" Content="Done" FontSize="16" CommandParameter="{Binding Content, ElementName=DoneSort_BTN}"/>
             </StackPanel>
         </Grid>
-        <ListBox Margin="20,20,20,20" Grid.Row="1" Width="auto" ItemsSource="{Binding ToDoCollection}" ItemTemplate="{StaticResource TaskItem}"/>
+        <ListBox Margin="20,20,20,20" Grid.Row="1" Width="auto" ItemsSource="{Binding ToDoList}" ItemTemplate="{StaticResource TaskItem}" HorizontalContentAlignment="Stretch"/>
         <StackPanel Grid.Row="2" Orientation="Horizontal" Margin="10,0">
             <TextBox Text="{Binding TaskText, Mode=TwoWay}" MinWidth="200" Height="40" FontSize="18" VerticalContentAlignment="Center" Padding="5">
             </TextBox>
