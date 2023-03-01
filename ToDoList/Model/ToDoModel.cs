@@ -11,6 +11,7 @@ namespace ToDoList.Model
     internal class ToDoModel : INotifyPropertyChanged
     {
         public static event Action<object> DeleteClickEvent;
+        public static event Action SortInfoChanged;
         public event PropertyChangedEventHandler PropertyChanged;
 
         public SolidColorBrush IsDoneButtonBackgroundColor
@@ -43,6 +44,7 @@ namespace ToDoList.Model
                     IsDone = true;
                 DbController.ChangeIsDone(this);
                 OnPropertyChanged(nameof(IsDoneButtonBackgroundColor));
+                SortInfoChanged();
             });}
         }
 

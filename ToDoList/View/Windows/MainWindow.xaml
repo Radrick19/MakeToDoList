@@ -30,9 +30,9 @@
             </StackPanel>
             <StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Bottom" HorizontalAlignment="Center">
                 <!--Сделать графическое отображение выбранного статуса с помощью изменения цвета-->
-                <Button Template="{DynamicResource LeftSortButton}" x:Name="AllSort_BTN" Command="{Binding SetAllSort}" Background="White" Width="60" Height="30" Content="All" FontSize="16"/>
-                <Button Template="{DynamicResource MiddleSortButton}" x:Name="ActiveSort_BTN" Command="{Binding SetActiveSort}" Width="60" Height="30" Background="White" Content="Active" FontSize="16" CommandParameter="{Binding Content, ElementName=ActiveSort_BTN}"/>
-                <Button Template="{DynamicResource RightSortButton}" x:Name="DoneSort_BTN" Command="{Binding SetDoneSort}" Width="60" Height="30" Background="White" Content="Done" FontSize="16" CommandParameter="{Binding Content, ElementName=DoneSort_BTN}"/>
+                <Button Template="{DynamicResource LeftSortButton}" x:Name="AllSort_BTN" Command="{Binding SetAllSort}" Background="{Binding AllSortModeColor}" Width="60" Height="30" Content="All" FontSize="16"/>
+                <Button Template="{DynamicResource MiddleSortButton}" x:Name="ActiveSort_BTN" Command="{Binding SetActiveSort}" Width="60" Height="30" Background="{Binding ActiveSortModeColor}" Content="Active" FontSize="16" CommandParameter="{Binding Content, ElementName=ActiveSort_BTN}"/>
+                <Button Template="{DynamicResource RightSortButton}" x:Name="DoneSort_BTN" Command="{Binding SetDoneSort}" Width="60" Height="30" Background="{Binding DoneSortModeColor}" Content="Done" FontSize="16" CommandParameter="{Binding Content, ElementName=DoneSort_BTN}"/>
             </StackPanel>
         </Grid>
         <ListBox Margin="20,20,20,20" Grid.Row="1" Width="auto" ItemsSource="{Binding ToDoList}" ItemTemplate="{StaticResource TaskItem}" HorizontalContentAlignment="Stretch"/>

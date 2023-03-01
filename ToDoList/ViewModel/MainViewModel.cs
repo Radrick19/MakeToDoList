@@ -2,6 +2,7 @@
 using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Input;
+using System.Windows.Media;
 using ToDoList.Data;
 using ToDoList.Infrastrucre;
 using ToDoList.Infrastrucre.Commands.Base;
@@ -18,6 +19,18 @@ namespace ToDoList.ViewModel
     }
     internal class MainViewModel : BaseViewModel
     {
+        public SolidColorBrush AllSortModeColor
+        {
+            get { return sortStatus == SortStatus.All ? new SolidColorBrush(Color.FromRgb(194, 231, 255)) : new SolidColorBrush(Color.FromRgb(255, 255, 255)); }
+        }
+        public SolidColorBrush ActiveSortModeColor
+        {
+            get { return sortStatus == SortStatus.Active ? new SolidColorBrush(Color.FromRgb(194, 231, 255)) : new SolidColorBrush(Color.FromRgb(255, 255, 255)); }
+        }
+        public SolidColorBrush DoneSortModeColor
+        {
+            get { return sortStatus == SortStatus.Done ? new SolidColorBrush(Color.FromRgb(194, 231, 255)) : new SolidColorBrush(Color.FromRgb(255, 255, 255)); }
+        }
         public List<ToDoModel> ToDoList
         {
             get
@@ -40,7 +53,13 @@ namespace ToDoList.ViewModel
         public SortStatus SortStatus
         {
             get { return sortStatus; }
-            set { Set(ref sortStatus, value, nameof(ToDoList)); }
+            set 
+            {
+                Set(ref sortStatus, value, nameof(ToDoList));
+                OnPropertyChanged(nameof(AllSortModeColor));
+                OnPropertyChanged(nameof(ActiveSortModeColor));
+                OnPropertyChanged(nameof(DoneSortModeColor));
+            }
         }
         private SortStatus sortStatus;
         private string taskText;
@@ -102,9 +121,15 @@ namespace ToDoList.ViewModel
             OnPropertyChanged(nameof(ToDoList));
         }
 
+        private void UpdateListInfo()
+        {
+            OnPropertyChanged(nameof(ToDoList));
+        }
+
         public MainViewModel()
         {
             ToDoModel.DeleteClickEvent += DeleteItem;
+            ToDoModel.SortInfoChanged += UpdateListInfo;
             sortStatus = SortStatus.All;
         }
     }
